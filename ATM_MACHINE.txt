@@ -1,0 +1,115 @@
+import java.util.Scanner;
+
+class Bankaccount {
+    float balance;
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void updateBalance(float amount) {
+        balance += amount;
+    }
+}
+
+class ATMMACHINE {
+    Bankaccount userAccount;
+
+    public void menu() {
+        System.out.println("1. Withdraw Money");
+        System.out.println("2. Deposit Money");
+        System.out.println("3. Check Balance");
+        System.out.println("4. Exit");
+        System.out.println("Choose an option: ");
+
+        Scanner sc = new Scanner(System.in);
+        int opt = sc.nextInt();
+        sc.nextLine(); // Consume the newline character
+
+        switch (opt) {
+            case 1 -> withDraw();
+            case 2 -> depositMoney();
+            case 3 -> checkBalance();
+            case 4 -> {
+                System.out.println("Thanks For Using ATM.");
+            }
+            default -> {
+                System.out.println("Choose a Valid Option!");
+                menu();
+            }
+        }
+    }
+
+    public void withDraw() {
+        System.out.println("Enter The Amount: ");
+        Scanner sc = new Scanner(System.in);
+
+        if (sc.hasNextFloat()) {
+            float amount = sc.nextFloat();
+            sc.nextLine(); // Consume the newline character
+
+            if (amount > 0 && amount <= userAccount.getBalance()) {
+                userAccount.updateBalance(-amount);
+                System.out.println("Money Withdrawn Successfully. Remaining Balance: " + userAccount.getBalance());
+            } else {
+                System.out.println("Invalid withdrawal amount or insufficient funds.");
+            }
+        } else {
+            System.out.println("Invalid input. Please enter a valid amount.");
+            withDraw();
+        }
+
+        transactionConfirmation();
+    }
+
+    public void depositMoney() {
+        System.out.println("Enter The Amount: ");
+        Scanner sc = new Scanner(System.in);
+
+        if (sc.hasNextFloat()) {
+            float amount = sc.nextFloat();
+            sc.nextLine(); // Consume the newline character
+
+            if (amount > 0) {
+                userAccount.updateBalance(amount);
+                System.out.println("Money Deposited Successfully. New Balance: " + userAccount.getBalance());
+            } else {
+                System.out.println("Invalid deposit amount.");
+            }
+        } else {
+            System.out.println("Invalid input. Please enter a valid amount.");
+            depositMoney();
+        }
+
+        transactionConfirmation();
+    }
+
+    public void checkBalance() {
+        System.out.println("Your Balance is: " + userAccount.getBalance());
+        transactionConfirmation();
+    }
+
+    public void transactionConfirmation() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Do you want Another transaction: yes/no?");
+        String yesno = sc.nextLine().toLowerCase();
+
+        if (!yesno.equals("yes")) {
+            System.out.println("Thanks For Using ATM.");
+        } else {
+            menu();
+        }
+    }
+}
+
+public class RWork {
+    public static void main(String[] args) {
+        Bankaccount userAccount = new Bankaccount();
+        userAccount.balance = 1000.0f;
+
+        ATMMACHINE atm = new ATMMACHINE();
+        atm.userAccount = userAccount;
+
+        atm.menu();
+    }
+}

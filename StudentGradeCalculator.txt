@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class StudentGradeCalculator {
+
+    static String GradeCalcu(float num)
+    {
+
+        if(num >= 90){ return "A+"; }
+        else if(num <= 89 && num>=81){ return "A"; }
+        else if(num <= 80 && num>=73){ return "B+"; }
+        else if(num <= 72 && num>=65){ return "B"; }
+        else if(num <= 64 && num>=60){ return "C+"; }
+        else if(num <= 59 && num>=55){ return "C"; }
+        else if(num <= 54 && num>=50){ return "C-"; }
+        else{ return "Fail"; }
+
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter The No: Of Subjects: ");
+        int numsubj = sc.nextInt();
+        int totalmarks = 0;
+
+        for(int i = 1; i<=numsubj ; i++)
+        {
+            System.out.print("Enter marks of Subject: " + i + " : " );
+            int marks= sc.nextInt();
+            totalmarks += marks;
+        }
+
+        System.out.println("The total of marks are : " + totalmarks);
+
+        float AvgPer =  (float) totalmarks / numsubj;
+        System.out.println("The average percentage is : " + AvgPer + "%");
+
+        System.out.print("Your Grade Is : " + GradeCalcu(AvgPer));
+
+
+
+    }
+}
